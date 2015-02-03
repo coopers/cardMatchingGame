@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #006633;
+  color: #e1ffd7;
+}
+
+h1 {
+  font-size: 109px;
+  opacity: 0.5;
+}
+
+h3 {
+  font-size: 60px;
+}
+
+a {
+  color: #e1ffd7;
+  text-decoration: none;
+}
+
+.pagewrap {
+  width: 1028px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.humanscore {
+  padding-top: 40px;
+  float: left;
+}
+
+.computerscore {
+  float: right;
+  padding-top: 40px;
+  padding-right: 8px;
+}
+
+.clear {
+  clear: both;
+}
+
+.humancards {
+  padding-top: 20px;
+  padding-left: 0;
+  height: 100px;
+  width: 464px;
+  float: left;
+  display: inline;
+  text-align: left;
+}
+
+.matchedcardhuman {
+  margin-right: -68px;
+}
+
+.computercards {
+  padding-top: 20px;
+  padding-right: 0;
+  height: 100px;
+  width: 464px;
+  display: inline;
+  float: right;
+  text-align: right;
+}
+
+.matchedcardcomputer {
+  margin-left: -68px;
+}
+
+.cardtable {
+  display: block;
+}
+
+.card {
+  background: url("../images/cards_png/b2fv.png") no-repeat;
+  width: 71px;
+  height: 96px;
+  padding: 2px 4px 2px 4px;
+  text-align: center;
+  display: inline-block;
+}
+
+.blankspot {
+  background-color: #006633;
+  width: 71px;
+  height: 96px;
+  padding: 2px 4px;
+  display: inline-block;
+}
+
+.footer {
+  display: block;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: normal;
+}
