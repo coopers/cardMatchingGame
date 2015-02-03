@@ -28,13 +28,13 @@ Game.prototype = {
         if (this.isSelectable(card) === true) {
             this.view.displayCard(index, card)
             this.addToSelectedCards(card)
-            this.isSecondCardSelected()
+            this.twoCardsSelected()
         }
     },
 
-    isSecondCardSelected: function() {
+    twoCardsSelected: function() {
         var self = this
-        if (this.twoCardsSelected()) {
+        if (this.cardsSelected.length === 2) {
             window.setTimeout(self.checkCards.bind(self), 2000)
         }
     },
@@ -64,7 +64,7 @@ Game.prototype = {
 
     computerFirstSelection: function() {
         var card = this.findMatchesInMemory()
-        if (card != false) {
+        if (card) {
             var index = this.cardIndex(card)
             this.view.cards[index].click()
         } else {
@@ -74,7 +74,7 @@ Game.prototype = {
 
     computerSecondSelection: function() {
         var card = this.findSecondCard(this.selectedCards[0])
-        if (card != false) {
+        if (card) {
             var index = this.cardIndex(card)
             this.view.cards[index].click()
         } else {
@@ -183,10 +183,6 @@ Game.prototype = {
 
     oneCardSelected: function() {
         return this.selectedCards.length === 1
-    },
-
-    twoCardsSelected: function() {
-        return this.selectedCards.length === 2
     },
 
     isSelectable: function(card) {
