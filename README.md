@@ -9,11 +9,6 @@ Requirements:
 The game consists of a regular 52 card deck
 To start a game, the cards are randomly shuffled and placed on a game board
 
-Card Model (value and suit)
-
-Deck Model (shuffle)
-
-
 A user can:
 turn cards over
 choose 2 cards per “turn” from the board
@@ -21,8 +16,6 @@ if the card values match (ignoring suit), the cards are removed from the game bo
 if not, cards are returned to the game board in their previous positions
 view successfully matched pairs of cards
 can count how many matched pairs they have found
-
-Game Model (select a card, complete a turn(select two cards), match cards, not match cards, )
 
 Other requirements
 The cards on the board maintain their initial location on the board when other cards are removed
