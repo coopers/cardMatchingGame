@@ -28,32 +28,36 @@ Game.prototype = {
         if (this.isSelectable(card) === true) {
             this.view.displayCard(index, card)
             this.addToSelectedCards(card)
-            this.twoCardsSelected()
+            this.checkForSecondCard()
         }
     },
 
-    twoCardsSelected: function() {
+    checkForSecondCard: function() {
         var self = this
-        if (this.cardsSelected.length === 2) {
-            window.setTimeout(self.checkCards.bind(self), 2000)
+        if (this.twoCardsSelected() ) {
+            window.setTimeout(self.checkCardsForMatch.bind(self), 2000)
         }
     },
 
-    checkCards: function() {
-        if (this.cardsMatch()) {
-            this.view.displayMatch(this.turn, this.cardIndexes(this.selectedCards))
-            this.addPoints()
-            this.view.displayScore(this.score)
-            this.addMatchedCards()
-            this.removeCardsFromMemory()
-            this.deselectCards()
-            this.goAgain()
-        } else {
-            this.view.displayNoMatch(this.cardIndexes(this.selectedCards))
-            this.addCardsToMemory()
-            this.deselectCards()
-            this.changeTurns()
-        } 
+    checkCardsForMatch: function() {
+        this.cardsMatch() ? this.playerMatchedCards() : this.playerDidNotMatchCards()
+    },
+
+    playerMatchedCards: function() {
+        this.view.displayMatch(this.turn, this.cardIndexes(this.selectedCards))
+        this.addPoints()
+        this.view.displayScore(this.score)
+        this.addMatchedCards()
+        this.removeCardsFromMemory()
+        this.deselectCards()
+        this.goAgain()
+    },
+
+    playerDidNotMatchCards: function() {
+        this.view.displayNoMatch(this.cardIndexes(this.selectedCards))
+        this.addCardsToMemory()
+        this.deselectCards()
+        this.changeTurns()
     },
 
     computerSelectCards: function() {
@@ -64,32 +68,27 @@ Game.prototype = {
 
     computerFirstSelection: function() {
         var card = this.findMatchesInMemory()
-        if (card) {
-            var index = this.cardIndex(card)
-            this.view.cards[index].click()
-        } else {
-            this.pickRandomCard()
-        }
+        card ? this.pickCard(card) : this.pickRandomCard()
     },
 
     computerSecondSelection: function() {
         var card = this.findSecondCard(this.selectedCards[0])
-        if (card) {
-            var index = this.cardIndex(card)
-            this.view.cards[index].click()
-        } else {
-            this.pickRandomCard()
-        }
+        card ? this.pickCard(card) : this.pickRandomCard()
+    },
+
+    pickCard: function(card) {
+        var index = this.cardIndex(card)
+        this.view.cards[index].click()
     },
 
     findMatchesInMemory: function() {
-        for (card in this.memory) {
+        for (card1 in this.memory) {
             for (card2 in this.memory) {
-                if (this.memory[card] != undefined) {
+                if (this.memory[card1] != undefined) {
                     if (this.memory[card2] != undefined) {
-                        if (this.memory[card] != this.memory[card2]) {
-                            if (this.memory[card].value === this.memory[card2].value) {
-                                return this.memory[card]                      
+                        if (this.memory[card1] != this.memory[card2]) {
+                            if (this.memory[card1].value === this.memory[card2].value) {
+                                return this.memory[card1]                      
                             }
                         }
                     }
@@ -100,11 +99,11 @@ Game.prototype = {
     },
 
     findSecondCard: function(card1) {
-        for (card in this.memory) {
-            if (this.memory[card] != undefined) {
-                if (this.memory[card] != card1) {
-                    if (this.memory[card].value === card1.value) {
-                        return this.memory[card]
+        for (card2 in this.memory) {
+            if (this.memory[card2] != undefined) {
+                if (this.memory[card2] != card1) {
+                    if (this.memory[card2].value === card1.value) {
+                        return this.memory[card2]
                     }
                 }
             }
@@ -114,8 +113,7 @@ Game.prototype = {
 
     pickRandomCard: function() {
         var card = this.computerPickableCards()
-        var index = this.cardIndex(card)
-        this.view.cards[index].click()
+        this.pickCard(card)
     },
 
     computerPickableCards: function() {
@@ -141,17 +139,10 @@ Game.prototype = {
         for (i = 0; i < this.selectedCards.length; i++) {
             this.matchedCards.push(this.selectedCards[i])
         }
-        if (this.matchedCards.length === 52) {
-
-        }
     },
 
     addPoints: function() {
-        if (this.turn === "human") {
-            this.score[0]++
-        } else {
-            this.score[1]++
-        }
+        this.turn === "human" ? this.score[0]++ : this.score[1]++
     },
 
     goAgain: function() {
@@ -183,6 +174,10 @@ Game.prototype = {
 
     oneCardSelected: function() {
         return this.selectedCards.length === 1
+    },
+
+    twoCardsSelected: function() {
+        return this.selectedCards.length === 2
     },
 
     isSelectable: function(card) {
